@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Login | ClaimVision AI{% endblock %}
+{% block content %}
+<section class="form-panel">
+    <div class="form-header">
+        <h2>Welcome Back</h2>
+        <p>Login to continue submitting claims and tracking results.</p>
+    </div>
+    <form method="POST" class="auth-form">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Enter your password" required>
+        <button type="submit" class="button button-primary">Login</button>
+        <p class="form-note">New here? <a href="{{ url_for('main.register') }}">Register now</a>.</p>
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Submit Claim | ClaimVision AI{% endblock %}
+{% block content %}
+<section class="form-panel">
+    <div class="form-header">
+        <h2>Submit Your Claim</h2>
+        <p>Upload a vehicle damage photo and add a description for AI validation.</p>
+    </div>
+    <form method="POST" enctype="multipart/form-data" class="claim-form">
+        <label>Damage Photo</label>
+        <div class="upload-box" id="upload-box">
+            <input type="file" name="image" id="image-upload" accept="image/*" required>
+            <div class="upload-content">
+                <span class="upload-icon">📷</span>
+                <span class="upload-label">Drop your image here or click to browse</span>
+                <img id="upload-preview" class="upload-preview" alt="Selected upload preview">
+            </div>
+        </div>
+        <label>Claim Description</label>
+        <textarea name="description" rows="6" placeholder="Describe the accident, damage location, and incident details." required></textarea>
+        <button type="submit" class="button button-primary">Submit Claim</button>
+    </form>
+</section>
+{% endblock %}

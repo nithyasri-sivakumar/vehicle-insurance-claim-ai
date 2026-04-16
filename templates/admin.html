@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard | ClaimVision AI{% endblock %}
+{% block content %}
+<section class="dashboard-panel">
+    <div class="dashboard-header">
+        <div>
+            <h2>Admin Overview</h2>
+            <p>Review all submitted claims across the system.</p>
+        </div>
+    </div>
+    {% if claims %}
+        <div class="claims-grid">
+            {% for claim in claims %}
+            <article class="claim-card">
+                <div class="claim-card-top">
+                    <span class="claim-id">Claim #{{ claim.id }}</span>
+                    <span class="status-pill status-{{ claim.status|replace(' ', '-') }}">{{ claim.status.replace('_', ' ')|title }}</span>
+                </div>
+                <p class="claim-desc">{{ claim.description }}</p>
+                <div class="claim-meta">
+                    <span>User: <strong>{{ claim.user.username }}</strong></span>
+                    <span>Severity: <strong>{{ claim.severity }}</strong></span>
+                    <span>Fraud Score: <strong>{{ '{:.0f}'.format((claim.fraud_score or 0) * 100) }}%</strong></span>
+                    <span>Estimate: <strong>&#8377;{{ '{:,.0f}'.format(claim.estimated_amount or 0) }}</strong></span>
+                </div>
+                {% if claim.vehicle_type and claim.vehicle_type != 'unknown' %}
+                <div class="claim-meta">
+                    <span>Vehicle: <strong>{{ claim.vehicle_type|replace('_', ' ')|title }}</strong></span>
+                    <span>Damage Areas: <strong>{{ claim.damage_location if claim.damage_location else 'None' }}</strong></span>
+                </div>
+                {% endif %}
+                <p class="claim-summary">{{ claim.damage_summary or 'Damage description is not available.' }}</p>
+                {% if claim.parts_to_replace and claim.parts_to_replace != 'None' %}
+                <p class="claim-parts"><strong>Parts to Replace:</strong> {{ claim.parts_to_replace }}</p>
+                {% endif %}
+                <p class="claim-reco"><strong>Repair:</strong> {{ claim.repair_recommendation or 'No recommendation provided.' }}</p>
+                <div class="claim-footer">Submitted: {{ claim.submitted_at.strftime('%Y-%m-%d %H:%M') }}</div>
+            </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>No claims found yet.</p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}
